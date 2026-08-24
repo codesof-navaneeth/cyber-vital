@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#05070d">
+
+<title>CYBER//CALC — BMI</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #05070d;
+    --panel: rgba(10,16,29,.78);
+    --cyan: #00eaff;
+    --blue: #1677ff;
+    --purple: #7b2cff;
+    --text: #eef8ff;
+    --muted: #8290a8;
+    --line: rgba(255,255,255,.09);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 75% 12%,
+            rgba(0,234,255,.12),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 15% 75%,
+            rgba(123,44,255,.12),
+            transparent 30%
+        ),
+        #05070d;
+
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+}
+
+/* ================= BACKGROUND GRID ================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    opacity: .11;
+
+    background-image:
+        linear-gradient(
+            rgba(0,234,255,.2) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0,234,255,.2) 1px,
+            transparent 1px
+        );
+
+    background-size: 55px 55px;
+
+    transform:
+        perspective(600px)
+        rotateX(55deg)
+        scale(1.5);
+
+    transform-origin: bottom;
+}
+
+/* ================= PARTICLES ================= */
+
+.particles {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+
+    width: 2px;
+    height: 2px;
+
+    border-radius: 50%;
+
+    background: var(--cyan);
+
+    box-shadow:
+        0 0 9px var(--cyan);
+
+    animation: float linear infinite;
+}
+
+@keyframes float {
+
+    from {
+        transform: translateY(105vh);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: .8;
+    }
+
+    85% {
+        opacity: .8;
+    }
+
+    to {
+        transform: translateY(-10vh);
+        opacity: 0;
+    }
+}
+
+/* ================= NAVBAR ================= */
+
+nav {
+    height: 72px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 20;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 6%;
+
+    background: rgba(5,7,13,.68);
+
+    backdrop-filter: blur(18px);
+
+    border-bottom:
+        1px solid var(--line);
+}
+
+.logo {
+    font-family: 'Orbitron';
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+.logo span {
+    color: var(--cyan);
+
+    text-shadow:
+        0 0 15px var(--cyan);
+}
+
+.nav-status {
+    font-size: .68rem;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    color: #7f8ca2;
+}
+
+.nav-status i {
+    display: inline-block;
+
+    width: 6px;
+    height: 6px;
+
+    margin-right: 8px;
+
+    border-radius: 50%;
+
+    background: #29f59a;
+
+    box-shadow:
+        0 0 10px #29f59a;
+}
+
+/* ================= MAIN ================= */
+
+main {
+    max-width: 1080px;
+
+    margin: auto;
+
+    padding:
+        120px 20px 70px;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+    min-height: 330px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 760px;
+}
+
+.kicker {
+    font-family: 'Orbitron';
+
+    font-size: .68rem;
+
+    font-weight: 700;
+
+    letter-spacing: 4px;
+
+    color: var(--cyan);
+
+    margin-bottom: 16px;
+}
+
+h1 {
+    font-family: 'Orbitron';
+
+    font-size:
+        clamp(2.3rem, 6vw, 4.8rem);
+
+    line-height: 1;
+
+    letter-spacing: -2px;
+}
+
+h1 span {
+    color: var(--cyan);
+
+    text-shadow:
+        0 0 30px
+        rgba(0,234,255,.35);
+}
+
+.hero p {
+    color: var(--muted);
+
+    font-size: 1.05rem;
+
+    margin-top: 16px;
+
+    line-height: 1.6;
+}
+
+/* ================= PANEL ================= */
+
+.panel {
+    border:
+        1px solid var(--line);
+
+    background:
+        var(--panel);
+
+    backdrop-filter:
+        blur(18px);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 80px
+        rgba(0,0,0,.25);
+}
+
+/* ================= INPUT ================= */
+
+.input-panel {
+    padding: 25px;
+}
+
+.panel-label {
+    font-family: 'Orbitron';
+
+    font-size: .66rem;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    color: var(--cyan);
+
+    margin-bottom: 20px;
+}
+
+.fields {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 15px;
+}
+
+.field label {
+    display: block;
+
+    color: #9aa8bb;
+
+    font-size: .76rem;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 7px;
+}
+
+.field input,
+.field select {
+    width: 100%;
+
+    padding: 15px;
+
+    border:
+        1px solid #203246;
+
+    border-radius: 10px;
+
+    background: #070d18;
+
+    color: white;
+
+    font:
+        600 1rem
+        'Rajdhani';
+
+    outline: none;
+}
+
+.field input:focus,
+.field select:focus {
+    border-color:
+        var(--cyan);
+
+    box-shadow:
+        0 0 18px
+        rgba(0,234,255,.1);
+}
+
+.analyze {
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding: 16px;
+
+    border:
+        1px solid var(--cyan);
+
+    background:
+        var(--cyan);
+
+    color: #001014;
+
+    font:
+        800 .8rem
+        'Orbitron';
+
+    letter-spacing: 2px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.analyze:hover {
+    box-shadow:
+        0 0 30px
+        rgba(0,234,255,.45);
+
+    transform:
+        translateY(-2px);
+}
+
+/* ================= ANALYZING ================= */
+
+.analyzing {
+    display: none;
+
+    text-align: center;
+
+    padding: 25px;
+
+    color: var(--cyan);
+
+    font:
+        700 .7rem
+        'Orbitron';
+
+    letter-spacing: 2px;
+}
+
+.progress-bar {
+    height: 4px;
+
+    background: #152131;
+
+    border-radius: 20px;
+
+    margin:
+        15px auto 0;
+
+    max-width: 400px;
+
+    overflow: hidden;
+}
+
+.progress-bar span {
+    display: block;
+
+    width: 0;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--cyan),
+            var(--purple)
+        );
+
+    transition:
+        width 1.2s;
+}
+
+/* ================= RESULT ================= */
+
+.result {
+    display: none;
+
+    margin-top: 22px;
+
+    animation:
+        resultIn .6s ease;
+}
+
+.result.show {
+    display: block;
+}
+
+@keyframes resultIn {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0);
+    }
+}
+
+.result-grid {
+    display: grid;
+
+    grid-template-columns:
+        1.05fr .95fr;
+
+    gap: 22px;
+}
+
+/* ================= SCORE ================= */
+
+.score-panel {
+    padding: 30px;
+
+    text-align: center;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.score-panel::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    border-radius: 50%;
+
+    left: 50%;
+    top: 52%;
+
+    transform:
+        translate(-50%,-50%);
+
+    background:
+        rgba(0,234,255,.08);
+
+    filter:
+        blur(35px);
+}
+
+.score-label {
+
+    position: relative;
+
+    color: var(--muted);
+
+    font:
+        700 .68rem
+        'Orbitron';
+
+    letter-spacing: 3px;
+}
+
+.score {
+
+    position: relative;
+
+    font:
+        800
+        clamp(4.2rem,12vw,7rem)
+        'Orbitron';
+
+    line-height: 1.05;
+
+    color: var(--cyan);
+
+    text-shadow:
+        0 0 35px
+        rgba(0,234,255,.3);
+
+    margin: 10px 0;
+}
+
+.category {
+
+    position: relative;
+
+    display: inline-block;
+
+    padding:
+        7px 15px;
+
+    border:
+        1px solid #1edcaa;
+
+    border-radius: 99px;
+
+    color: #5ff5c9;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    font-size: .72rem;
+}
+
+/* ================= GAUGE ================= */
+
+.gauge {
+
+    height: 14px;
+
+    margin:
+        35px auto 10px;
+
+    max-width: 540px;
+
+    border-radius: 99px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #4c7cff 0 18%,
+            #2de3ad 18% 55%,
+            #ffd44d 55% 78%,
+            #ff596d 78%
+        );
+
+    position: relative;
+}
+
+.marker {
+
+    position: absolute;
+
+    top: -7px;
+
+    width: 3px;
+    height: 28px;
+
+    background: white;
+
+    box-shadow:
+        0 0 12px white;
+
+    left: 20%;
+
+    transition: .8s;
+}
+
+.gauge-labels {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    color: #68778e;
+
+    font-size: .68rem;
+}
+
+/* ================= STATS ================= */
+
+.stat-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+.mini {
+
+    padding: 17px;
+
+    border:
+        1px solid var(--line);
+
+    background:
+        rgba(255,255,255,.025);
+
+    border-radius: 12px;
+
+    text-align: left;
+}
+
+.mini span {
+
+    display: block;
+
+    color: var(--muted);
+
+    font-size: .68rem;
+
+    letter-spacing: 1px;
+}
+
+.mini strong {
+
+    display: block;
+
+    font:
+        700 1.05rem
+        'Orbitron';
+
+    margin-top: 5px;
+}
+
+/* ================= INFORMATION ================= */
+
+.info-stack {
+
+    display: grid;
+
+    gap: 14px;
+}
+
+.info-card {
+
+    padding: 22px;
+}
+
+.info-card h3 {
+
+    font:
+        700 .9rem
+        'Orbitron';
+
+    margin-bottom: 10px;
+}
+
+.info-card p {
+
+    color: var(--muted);
+
+    font-size: .9rem;
+
+    line-height: 1.55;
+}
+
+.range {
+
+    font:
+        700 1.25rem
+        'Orbitron';
+
+    color: var(--cyan);
+}
+
+/* ================= ACCORDION ================= */
+
+.accordion {
+
+    padding: 0;
+
+    overflow: hidden;
+}
+
+.acc-btn {
+
+    width: 100%;
+
+    background: none;
+
+    border: 0;
+
+    color: white;
+
+    text-align: left;
+
+    padding: 19px 20px;
+
+    font:
+        700 .78rem
+        'Orbitron';
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    justify-content:
+        space-between;
+}
+
+.acc-content {
+
+    max-height: 0;
+
+    overflow: hidden;
+
+    transition:
+        max-height .35s;
+
+    padding: 0 20px;
+
+    color: var(--muted);
+
+    line-height: 1.6;
+
+    font-size: .88rem;
+}
+
+.accordion.open .acc-content {
+
+    max-height: 250px;
+
+    padding-bottom: 20px;
+}
+
+/* ================= TABLE ================= */
+
+table {
+
+    width: 100%;
+
+    border-collapse:
+        collapse;
+
+    margin-top: 15px;
+
+    font-size: .85rem;
+}
+
+th,
+td {
+
+    text-align: left;
+
+    padding: 10px;
+
+    border-bottom:
+        1px solid var(--line);
+}
+
+th {
+
+    color: var(--cyan);
+
+    font-weight: 700;
+}
+
+td {
+
+    color: #b4c0d0;
+}
+
+/* ================= DISCLAIMER ================= */
+
+.disclaimer {
+
+    margin-top: 18px;
+
+    color: #637187;
+
+    font-size: .75rem;
+
+    line-height: 1.5;
+
+    text-align: center;
+}
+
+/* ================= NEW CALCULATION ================= */
+
+.new-calc {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 38px;
+
+    padding-bottom: 10px;
+}
+
+#newCalcBtn {
+
+    padding:
+        15px 30px;
+
+    border:
+        1px solid
+        rgba(0,234,255,.45);
+
+    border-radius: 10px;
+
+    background:
+        rgba(0,234,255,.04);
+
+    color:
+        var(--cyan);
+
+    font-family:
+        'Orbitron',
+        sans-serif;
+
+    font-size: .72rem;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+#newCalcBtn span {
+
+    display: inline-block;
+
+    margin-right: 8px;
+
+    font-size: 1rem;
+
+    transition: .3s;
+}
+
+#newCalcBtn:hover {
+
+    background:
+        var(--cyan);
+
+    color:
+        #001014;
+
+    border-color:
+        var(--cyan);
+
+    box-shadow:
+        0 0 30px
+        rgba(0,234,255,.4);
+
+    transform:
+        translateY(-3px);
+}
+
+#newCalcBtn:hover span {
+
+    transform:
+        rotate(90deg);
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:760px) {
+
+    .result-grid {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .fields {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    main {
+
+        padding-left: 14px;
+
+        padding-right: 14px;
+    }
+
+    .nav-status {
+
+        display: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <div class="logo">
+        CYBER<span>//</span>VITAL
+    </div>
+
+    <div class="nav-status">
+        <i></i>
+        SYSTEM ONLINE
+    </div>
+
+</nav>
+
+<!-- ================= PARTICLES ================= -->
+
+<div
+    class="particles"
+    id="particles">
+</div>
+
+<main>
+
+<!-- ================= HERO ================= -->
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <div class="kicker">
+            BODY METRIC ANALYSIS // 01
+        </div>
+
+        <h1>
+            KNOW YOUR <span>
+                <span>
+            <span>BMI</span>
+        </h1>
+
+        <p>
+            A modern BMI calculator that turns
+            a simple calculation into an
+            understandable body-metric report.
+        </p>
+
+    </div>
+
+</header>
+
+
+<!-- ================= INPUT PANEL ================= -->
+
+<section class="panel input-panel">
+
+    <div class="panel-label">
+        INPUT PARAMETERS
+    </div>
+
+    <div class="fields">
+
+        <div class="field">
+
+            <label>
+                HEIGHT
+            </label>
+
+            <input
+                id="height"
+                type="number"
+                inputmode="decimal"
+                placeholder="e.g. 175"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                WEIGHT
+            </label>
+
+            <input
+                id="weight"
+                type="number"
+                inputmode="decimal"
+                placeholder="e.g. 62"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                AGE
+        
+            </label>
+
+            <input
+                id="age"
+                type="number"
+                inputmode="numeric"
+                placeholder="e.g. 19"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                UNIT
+            </label>
+
+            <select id="unit">
+
+                <option value="metric">
+                    cm / kg
+                </option>
+
+                <option value="imperial">
+                    inches / lb
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="analyze"
+        id="analyze">
+
+        ANALYZE BIOMETRICS →
+
+    </button>
+
+
+    <div
+        class="analyzing"
+        id="analyzing">
+
+        SCANNING PARAMETERS...
+
+        <div class="progress-bar">
+
+            <span
+                id="progress">
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= RESULT ================= -->
+
+<section
+    class="result"
+    id="result">
+
+    <div class="result-grid">
+
+
+        <!-- ================= SCORE ================= -->
+
+        <div class="panel score-panel">
+
+            <div class="score-label">
+                BODY MASS INDEX
+            </div>
+
+            <div
+                class="score"
+                id="score">
+
+                --
+
+            </div>
+
+            <div
+                class="category"
+                id="category">
+
+                WAITING
+
+            </div>
+
+
+            <div class="gauge">
+
+                <div
+                    class="marker"
+                    id="marker">
+                </div>
+
+            </div>
+
+
+            <div class="gauge-labels">
+
+                <span>UNDER</span>
+
+                <span>NORMAL</span>
+
+                <span>OVER</span>
+
+                <span>OBESITY</span>
+
+            </div>
+
+
+            <div class="stat-grid">
+
+
+                <div class="mini">
+
+                    <span>
+                        HEIGHT
+                    </span>
+
+                    <strong
+                        id="outHeight">
+
+                        --
+
+                    </strong>
+
+                </div>
+
+
+                <div class="mini">
+
+                    <span>
+                        WEIGHT
+                    </span>
+
+                    <strong
+                        id="outWeight">
+
+                        --
+
+                    </strong>
+
+                </div>
+
+
+                <div class="mini">
+
+                    <span>
+                        STATUS
+                    </span>
+
+                    <strong
+                        id="outStatus">
+
+                        --
+
+                    </strong>
+
+                </div>
+
+
+                <div class="mini">
+
+                    <span>
+                        INDEX
+                    </span>
+
+                    <strong>
+                        BMI
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= INFORMATION ================= -->
+
+        <div class="info-stack">
+
+
+            <div class="panel info-card">
+
+                <h3>
+                    HEALTHY WEIGHT RANGE
+                </h3>
+
+                <div
+                    class="range"
+                    id="range">
+
+                    --
+
+                </div>
+
+                <p>
+
+                    For adults, a BMI from
+                    18.5 to 24.9 is commonly
+                    classified as the healthy
+                    range.
+
+                </p>
+
+            </div>
+
+
+            <div class="panel info-card">
+
+                <h3>
+                    WHAT DOES THIS MEAN?
+                </h3>
+
+                <p id="meaning">
+
+                    Enter your height and weight
+                    to generate your analysis.
+
+                </p>
+
+            </div>
+
+
+            <div class="panel accordion">
+
+                <button
+                    class="acc-btn">
+
+                    BMI CATEGORIES
+
+                    <span>
+                        +
+                    </span>
+
+                </button>
+
+
+                <div class="acc-content">
+
+                    <table>
+
+                        <tr>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                BMI
+                            </th>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Underweight
+                            </td>
+
+                            <td>
+                                &lt; 18.5
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Healthy
+                            </td>
+
+                            <td>
+                                18.5 – 24.9
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Overweight
+                            </td>
+
+                            <td>
+                                25.0 – 29.9
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Obesity
+                            </td>
+
+                            <td>
+                                30.0+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel accordion">
+
+                <button
+                    class="acc-btn">
+
+                    BMI LIMITATIONS
+
+                    <span>
+                        +
+                    </span>
+
+                </button>
+
+
+                <div class="acc-content">
+
+                    BMI is a screening measure
+                    based on height and weight.
+                    It does not directly measure
+                    body fat or distinguish muscle
+                    from fat, so it should not be
+                    treated as a complete picture
+                    of health.
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= DISCLAIMER ================= -->
+
+    <div class="disclaimer">
+
+        This calculator is for general
+        informational use. BMI categories
+        can be interpreted differently for
+        children, teenagers, pregnancy and
+        some athletes. It is not a diagnosis.
+
+    </div>
+
+
+    <!-- ================= NEW CALCULATION ================= -->
+
+    <div class="new-calc">
+
+        <button
+            id="newCalcBtn">
+
+            <span>
+                ＋
+            </span>
+
+            NEW CALCULATION
+
+        </button>
+
+    </div>
+
+
+</section>
+
+</main>
+
+
+<script>
+
+/* ================================================= */
+/* PARTICLES */
+/* ================================================= */
+
+const particleContainer =
+    document.getElementById(
+        "particles"
+    );
+
+for(let i = 0; i < 65; i++){
+
+    const particle =
+        document.createElement("i");
+
+    particle.className =
+        "particle";
+
+    particle.style.left =
+        Math.random() * 100 + "%";
+
+    particle.style.animationDuration =
+        (8 + Math.random() * 12) + "s";
+
+    particle.style.animationDelay =
+        (-Math.random() * 15) + "s";
+
+    particleContainer.appendChild(
+        particle
+    );
+}
+
+
+/* ================================================= */
+/* ACCORDIONS */
+/* ================================================= */
+
+document
+.querySelectorAll(".acc-btn")
+.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            const accordion =
+                button.parentElement;
+
+            accordion.classList.toggle(
+                "open"
+            );
+
+            button
+                .querySelector("span")
+                .textContent =
+                accordion.classList.contains(
+                    "open"
+                )
+                ? "−"
+                : "+";
+
+        }
+    );
+
+});
+
+
+/* ================================================= */
+/* ELEMENTS */
+/* ================================================= */
+
+const heightInput =
+    document.getElementById(
+        "height"
+    );
+
+const weightInput =
+    document.getElementById(
+        "weight"
+    );
+
+const ageInput =
+    document.getElementById(
+        "age"
+    );
+
+const unitInput =
+    document.getElementById(
+        "unit"
+    );
+
+const analyze =
+    document.getElementById(
+        "analyze"
+    );
+
+const analyzing =
+    document.getElementById(
+        "analyzing"
+    );
+
+const progress =
+    document.getElementById(
+        "progress"
+    );
+
+const result =
+    document.getElementById(
+        "result"
+    );
+
+const newCalcBtn =
+    document.getElementById(
+        "newCalcBtn"
+    );
+
+
+/* ================================================= */
+/* BMI CALCULATION */
+/* ================================================= */
+
+analyze.addEventListener(
+    "click",
+    () => {
+
+        let height =
+            parseFloat(
+                heightInput.value
+            );
+
+        let weight =
+            parseFloat(
+                weightInput.value
+            );
+
+
+        /* VALIDATION */
+
+        if(
+            !height ||
+            !weight ||
+            height <= 0 ||
+            weight <= 0
+        ){
+
+            alert(
+                "Enter a valid height and weight."
+            );
+
+            return;
+
+        }
+
+
+        /* IMPERIAL CONVERSION */
+
+        if(
+            unitInput.value ===
+            "imperial"
+        ){
+
+            height =
+                height * 2.54;
+
+            weight =
+                weight * 0.453592;
+
+        }
+
+
+        /* SANITY CHECK */
+
+        if(
+            height < 80 ||
+            height > 250 ||
+            weight < 15 ||
+            weight > 500
+        ){
+
+            alert(
+                "Please check your height and weight."
+            );
+
+            return;
+
+        }
+
+
+        /* ANALYSIS ANIMATION */
+
+        analyze.style.display =
+            "none";
+
+        analyzing.style.display =
+            "block";
+
+        progress.style.width =
+            "0";
+
+
+        requestAnimationFrame(
+            () => {
+
+                progress.style.width =
+                    "100%";
+
+            }
+        );
+
+
+        /* CALCULATE AFTER ANIMATION */
+
+        setTimeout(
+            () => {
+
+                const meters =
+                    height / 100;
+
+
+                const bmi =
+                    weight /
+                    (meters * meters);
+
+
+                const value =
+                    bmi.toFixed(1);
+
+
+                let category;
+                let meaning;
+
+
+                /* CATEGORY */
+
+                if(bmi < 18.5){
+
+                    category =
+                        "UNDERWEIGHT";
+
+                    meaning =
+                        "Your BMI is below the commonly used healthy range. BMI is only a screening measure, so factors such as muscle mass and overall health matter.";
+
+                }
+
+                else if(bmi < 25){
+
+                    category =
+                        "NORMAL";
+
+                    meaning =
+                        "Your BMI falls within the commonly used healthy range for adults. BMI is only one measurement and does not describe body composition by itself.";
+
+                }
+
+                else if(bmi < 30){
+
+                    category =
+                        "OVERWEIGHT";
+
+                    meaning =
+                        "Your BMI is above the commonly used healthy range. BMI alone cannot tell whether the extra weight comes from muscle, fat or other factors.";
+
+                }
+
+                else{
+
+                    category =
+                        "OBESITY";
+
+                    meaning =
+                        "Your BMI is in the obesity category used for adult screening. Consider this result as one health indicator rather than a diagnosis.";
+
+                }
+
+
+                /* HEALTHY RANGE */
+
+                const healthyLow =
+                    18.5 *
+                    (meters * meters);
+
+                const healthyHigh =
+                    24.9 *
+                    (meters * meters);
+
+
+                /* DISPLAY RESULT */
+
+                document
+                    .getElementById(
+                        "score"
+                    )
+                    .textContent =
+                    value;
+
+
+                document
+                    .getElementById(
+                        "category"
+                    )
+                    .textContent =
+                    category;
+
+
+                document
+                    .getElementById(
+                        "outHeight"
+                    )
+                    .textContent =
+                    height.toFixed(0)
+                    + " cm";
+
+
+                document
+                    .getElementById(
+                        "outWeight"
+                    )
+                    .textContent =
+                    weight.toFixed(1)
+                    + " kg";
+
+
+                document
+                    .getElementById(
+                        "outStatus"
+                    )
+                    .textContent =
+                    category;
+
+
+                document
+                    .getElementById(
+                        "range"
+                    )
+                    .textContent =
+                    healthyLow.toFixed(1)
+                    + " – "
+                    + healthyHigh.toFixed(1)
+                    + " kg";
+
+
+                document
+                    .getElementById(
+                        "meaning"
+                    )
+                    .textContent =
+                    meaning;
+
+
+                /* GAUGE */
+
+                const marker =
+                    Math.max(
+                        2,
+                        Math.min(
+                            98,
+                            (
+                                (bmi - 12) /
+                                (38 - 12)
+                            ) * 100
+                        )
+                    );
+
+
+                document
+                    .getElementById(
+                        "marker"
+                    )
+                    .style.left =
+                    marker + "%";
+
+
+                /* FINISH */
+
+                analyzing.style.display =
+                    "none";
+
+                analyze.style.display =
+                    "block";
+
+                result.classList.add(
+                    "show"
+                );
+
+
+                /* SCROLL TO RESULT */
+
+                result.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            },
+
+            1300
+        );
+
+    }
+);
+
+
+/* ================================================= */
+/* NEW CALCULATION */
+/* ================================================= */
+
+newCalcBtn.addEventListener(
+    "click",
+    () => {
+
+        /* CLEAR INPUTS */
+
+        heightInput.value = "";
+
+        weightInput.value = "";
+
+        ageInput.value = "";
+
+        unitInput.value =
+            "metric";
+
+
+        /* RESET RESULT */
+
+        result.classList.remove(
+            "show"
+        );
+
+
+        /* RESET ANALYSIS */
+
+        analyzing.style.display =
+            "none";
+
+        analyze.style.display =
+            "block";
+
+        progress.style.width =
+            "0";
+
+
+        /* RESET SCORE */
+
+        document
+            .getElementById(
+                "score"
+            )
+            .textContent =
+            "--";
+
+
+        document
+            .getElementById(
+                "category"
+            )
+            .textContent =
+            "WAITING";
+
+
+        document
+            .getElementById(
+                "outHeight"
+            )
+            .textContent =
+            "--";
+
+
+        document
+            .getElementById(
+                "outWeight"
+            )
+            .textContent =
+            "--";
+
+
+        document
+            .getElementById(
+                "outStatus"
+            )
+            .textContent =
+            "--";
+
+
+        document
+            .getElementById(
+                "range"
+            )
+            .textContent =
+            "--";
+
+
+        document
+            .getElementById(
+                "meaning"
+            )
+            .textContent =
+            "Enter your height and weight to generate your analysis.";
+
+
+        /* RESET GAUGE */
+
+        document
+            .getElementById(
+                "marker"
+            )
+            .style.left =
+            "20%";
+
+
+        /* CLOSE ACCORDIONS */
+
+        document
+            .querySelectorAll(
+                ".accordion"
+            )
+            .forEach(
+                accordion => {
+
+                    accordion.classList.remove(
+                        "open"
+                    );
+
+                    accordion
+                        .querySelector(
+                            ".acc-btn span"
+                        )
+                        .textContent =
+                        "+";
+
+                }
+            );
+
+
+        /* RETURN TO CALCULATOR */
+
+        document
+            .querySelector(
+                ".input-panel"
+            )
+            .scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "center"
+
+            });
+
+    }
+);
+
+</script>
+
+</body>
+</html>
