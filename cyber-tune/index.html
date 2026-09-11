@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#08090d">
+  <meta name="description" content="CYBER//TUNE — a private, offline-first music player for your local library.">
+  <title>CYBER//TUNE</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="brand"><span class="brand-mark">C//</span><span>CYBER<span class="slash">//</span>TUNE</span></div>
+      <nav class="nav-list">
+        <button class="nav-item is-active" data-route="home" aria-current="page"><span>⌂</span> Home</button>
+        <button class="nav-item" data-route="library"><span>▤</span> Library</button>
+        <button class="nav-item" data-route="search"><span>⌕</span> Search</button>
+      </nav>
+      <div class="sidebar-foot"><span class="status-dot"></span> LOCAL MODE</div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="mobile-brand">CYBER<span>//</span>TUNE</div>
+        <div class="topbar-actions">
+          <button class="icon-btn" id="importButton" aria-label="Import music" title="Import music">＋</button>
+          <button class="avatar" aria-label="Settings">CT</button>
+        </div>
+      </header>
+
+      <section id="view" class="view" aria-live="polite"></section>
+    </main>
+
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+      <button class="nav-item is-active" data-route="home"><span>⌂</span><small>Home</small></button>
+      <button class="nav-item" data-route="library"><span>▤</span><small>Library</small></button>
+      <button class="nav-item" data-route="search"><span>⌕</span><small>Search</small></button>
+    </nav>
+
+    <section class="mini-player" id="miniPlayer" aria-label="Mini player">
+      <div class="mini-art placeholder-art" id="miniArt">♪</div>
+      <div class="mini-meta"><strong id="miniTitle">Nothing playing</strong><span id="miniArtist">Import your music to begin</span></div>
+      <div class="mini-progress"><div id="miniProgress"></div></div>
+      <button class="player-btn" id="miniPlay" aria-label="Play">▶</button>
+      <button class="player-btn desktop-only" id="miniNext" aria-label="Next">›</button>
+    </section>
+
+    <input id="fileInput" type="file" accept="audio/*,.mp3,.wav,.flac,.m4a,.aac,.ogg" multiple hidden>
+  </div>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
